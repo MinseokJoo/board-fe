@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>기민한 게시판</title>
+</head>
+<body>
+  <form action="" id="login-form">
+    <label for="email">이메일</label>
+    <input type="email" id="email" name="email" required placeholder="이메일을 입력해주세용">
+    <label for="password">비밀번호</label>
+    <input type="password" id="password" name="password" required placeholder="비밀번호를 입력해주세용">
+    <button type="submit">로그인</button>
+  </form>
+</body>
+</html>
+<script>
+  document.getElementById("login-form").addEventListener("submit", (event) => {
+    event.preventDefault()
+
+    const data = {
+      email: document.getElementById("email").value,
+      password : document.getElementById("password").value
+    }
+
+    fetch("http://localhost:5000/api/users/login", {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type" : "application/json"
+      },
+      body: JSON.stringify(data)
+    }).then(response => {
+      if (response.status === 400) {
+        throw new Error("이메일 또는 비밀번호가 틀렸습니다.")
+      }
+      response.json()
+    })
+    .then((data) => {
+      location.replace("/home")
+    }).catch(err => {
+      alert(err.message)
+      window.location.reload()
+    })
+  })
+</script>
