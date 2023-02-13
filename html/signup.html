@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="" id="signup-form">
+      <label for="name">이름</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        required
+        placeholder="이름을 입력해주세용"
+      />
+
+      <label for="email">이메일</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        placeholder="이메일을 입력해주세용"
+      />
+
+      <label for="password">비밀번호</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+        placeholder="6~12글자의 비밀번호"
+      />
+
+      <label for="confirm">비밀번호</label>
+      <input
+        type="password"
+        id="confirm"
+        name="confirm"
+        required
+        placeholder="비밀번호를 재입력해주세용"
+      />
+      <p id="confirmMsg"></p>
+
+      <button type="submit">회원가입</button>
+    </form>
+  </body>
+</html>
+<script>
+  window.addEventListener("keyup", () => {
+    if (document.getElementById("password").value === "") {
+      document.getElementById("confirmMsg").innerHTML = "";
+    } else if (
+      document.getElementById("password").value !==
+      document.getElementById("confirm").value
+    ) {
+      document.getElementById("confirmMsg").innerHTML =
+        "비밀번호가 일치하지 않습니다.";
+    } else {
+      document.getElementById("confirmMsg").innerHTML = "비밀번호가 일치.";
+    }
+  });
+
+  document.getElementById("signup-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const data = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      password: document.getElementById("password").value,
+      confirm: document.getElementById("confirm").value,
+    };
+
+    fetch("http://localhost:5000/api/users/signup", {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (response.status === 409) {
+          throw new Error("이미 존재하는 이메일 입니다.");
+        }
+        if (response.status === 422) {
+          throw new Error("잘못된 형식입니다.");
+        }
+        response.json();
+      })
+      .then((data) => {
+        location.href = "/";
+      })
+      .catch((err) => {
+        alert(err.message);
+        window.location.reload();
+      });
+  });
+</script>

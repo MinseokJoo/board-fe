@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="button_wrap">
+      <a href="/profile">내정보</a>
+      <button type="button" id="logout">로그아웃</button>
+      <a href="/write">글쓰기</a>
+    </div>
+    <table style="border: 1px solid black" id="article-table">
+      <tr>
+        <th style="border: 1px solid black">제목</th>
+        <th style="border: 1px solid black">내용</th>
+        <th style="border: 1px solid black">작성자</th>
+        <th style="border: 1px solid black">작성일자</th>
+        <th style="border: 1px solid black">조회수</th>
+      </tr>
+    </table>
+    <div id="pagination" class="pagination-btn-wrap"></div>
+  </body>
+</html>
+<script>
+  document.getElementById("logout").addEventListener("click", (event) => {
+    event.preventDefault();
+    fetch("http://localhost:5000/api/users/logout", {
+      credentials: "include",
+    }).then((response) => {
+      location.href = "/";
+    });
+  });
+
+  if (document.cookie.search("accessToken") < 0) {
+    alert("로그인 후 가능합니다!");
+    location.replace("/");
+  }
+
+  let query = window.location.search;
+  let param = new URLSearchParams(query);
+  let page = Number(param.get("page") || 1);
+
+  fetch(`http://localhost:5000/api/articles?page=${page}`)
+    .then((response) => response.json())
+    .then((data) => {
+      for (let i = 0; i < data.rows.length; i++) {
+        const row = `
+                    <td>${data.rows[i].title}</td>
+                    <td>${data.rows[i].contents}</td>
+                    <td>${data.rows[i].user_id}</td>
+                    <td>${data.rows[i].createdAt}</td>
+                    <td>${data.rows[i].count}</td>
+                  `;
+        const tr = document.createElement("tr");
+        tr.innerHTML = row;
+        document.getElementById("article-table").appendChild(tr);
+      }
+      // pagination 버튼 생성
+      const pages = [];
+
+      // prev 버튼
+      if (page > 1) {
+        const prev = `
+                      <a href='?page=${
+                        Number(page) - 1
+                      }'><div class="pagination-btn">이전</div></a>
+                  `;
+        pages.push(prev);
+      }
+
+      // pages 버튼
+      for (let i = data.firstPage; i <= data.lastPage; i++) {
+        const pageList =
+          Number(page) === i
+            ? `<a href='?page=${i}'><div class="pagination-btn active">${i}</div></a>`
+            : `<a href='?page=${i}'><div class="pagination-btn">${i}</div></a>`;
+
+        pages.push(pageList);
+      }
+
+      // next 버튼
+      if (page < data.totalPage) {
+        const next = `
+                      <a href='?page=${
+                        Number(page) + 1
+                      }'><div class="pagination-btn">다음</div>
+                  `;
+        pages.push(next);
+      }
+
+      document.getElementById("pagination").innerHTML = pages.join("");
+    });
+</script>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <a href="/home">호므로</a>
+  </div><br>
+  <table id="info-table">
+    <tr>
+      <th>name</th>
+      <th>email</th>
+    </tr>
+  </table>
+
+  <table id="myposts-table">
+    <tr>
+      <th>title</th>
+      <th>contents</th>
+    </tr>
+  </table>
+</body>
+</html>
+<script>
+  fetch("http://localhost:5000/userInfos", {credentials: "include"}).then(response => response.json()).then(({userInfo}) => {
+    const row = `
+    <td>${userInfo.name}</td>
+    <td>${userInfo.email}</td>` 
+
+    const tr = document.createElement("tr")
+    tr.innerHTML = row
+    document.getElementById("info-table").appendChild(tr)
+
+    for (let i = 0; i < userInfo.Articles.length; i++){
+      const a = `
+        <td>${userInfo.Articles[i].title}</td>
+        <td>${userInfo.Articles[i].contents}</td>` 
+  
+        const t = document.createElement("tr")
+        t.innerHTML = a
+        document.getElementById("myposts-table").appendChild(t)
+}
+  })
+</script>
