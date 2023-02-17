@@ -12,19 +12,33 @@
       <button type="button" id="logout">로그아웃</button>
       <a href="/write">글쓰기</a>
     </div>
-    <table style="border: 1px solid black" id="article-table">
+    <div id="todayTags">
+    </div>
+    <table id="article-table">
       <tr>
-        <th style="border: 1px solid black">제목</th>
-        <th style="border: 1px solid black">내용</th>
-        <th style="border: 1px solid black">작성자</th>
-        <th style="border: 1px solid black">작성일자</th>
-        <th style="border: 1px solid black">조회수</th>
+        <th>제목</th>
+        <th>내용</th>
+        <th>작성자</th>
+        <th>작성일자</th>
+        <th>조회수</th>
       </tr>
     </table>
     <div id="pagination" class="pagination-btn-wrap"></div>
   </body>
 </html>
 <script>
+  fetch(`http://localhost:5000/api/tags/today`)
+    .then((response) => response.json())
+    .then((data) => {
+      for (let i = 0; i < data.length; i++) {
+        const row = `<a href='/search?tag=${data[i]}'>${data[i]}</a>`;
+        const span = document.createElement("span");
+        span.innerHTML = row;
+        document.getElementById("todayTags").appendChild(span);
+      }
+    })
+
+
   document.getElementById("logout").addEventListener("click", (event) => {
     event.preventDefault();
     fetch("http://localhost:5000/api/users/logout", {
@@ -46,13 +60,13 @@
   fetch(`http://localhost:5000/api/articles?page=${page}`)
     .then((response) => response.json())
     .then((data) => {
-      for (let i = 0; i < data.rows.length; i++) {
+      for (let i = 0; i < data.articles.length; i++) {
         const row = `
-                    <td>${data.rows[i].title}</td>
-                    <td>${data.rows[i].contents}</td>
-                    <td>${data.rows[i].user_id}</td>
-                    <td>${data.rows[i].createdAt}</td>
-                    <td>${data.rows[i].count}</td>
+                    <td onclick="location.href='/articles/${data.articles[i].id}'">${data.articles[i].title}</td>
+                    <td onclick="location.href='/articles/${data.articles[i].id}'">${data.articles[i].contents}</td>
+                    <td onclick="location.href='/articles/${data.articles[i].id}'">${data.articles[i].author}</td>
+                    <td onclick="location.href='/articles/${data.articles[i].id}'">${data.articles[i].createdAt}</td>
+                    <td onclick="location.href='/articles/${data.articles[i].id}'">${data.articles[i].count}</td>
                   `;
         const tr = document.createElement("tr");
         tr.innerHTML = row;
@@ -66,7 +80,7 @@
         const prev = `
                       <a href='?page=${
                         Number(page) - 1
-                      }'><div class="pagination-btn">이전</div></a>
+                      }'>이전</a>
                   `;
         pages.push(prev);
       }
@@ -75,8 +89,8 @@
       for (let i = data.firstPage; i <= data.lastPage; i++) {
         const pageList =
           Number(page) === i
-            ? `<a href='?page=${i}'><div class="pagination-btn active">${i}</div></a>`
-            : `<a href='?page=${i}'><div class="pagination-btn">${i}</div></a>`;
+            ? `<a href='?page=${i}'>${i}</a>`
+            : `<a href='?page=${i}'>${i}</a>`;
 
         pages.push(pageList);
       }
@@ -86,7 +100,7 @@
         const next = `
                       <a href='?page=${
                         Number(page) + 1
-                      }'><div class="pagination-btn">다음</div>
+                      }'>다음</a>
                   `;
         pages.push(next);
       }

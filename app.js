@@ -26,4 +26,8 @@ app.get("/profile", (req,res) => {
   res.sendFile(__dirname + "/html/profile.html")
 })
 
+app.get("/search", (req,res) => {
+  res.sendFile(__dirname + "/html/search.html")
+})
+
 app.listen(5100, console.log("프론트 서버 온!"))

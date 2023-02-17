@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <a href="/home">홈</a>
+  <div id="tagWrap"></div>
+  <table id="article-table">
+    <tr>
+      <th>제목</th>
+      <th>내용</th>
+      <th>작성자</th>
+      <th>작성일자</th>
+      <th>조회수</th>
+    </tr>
+  </table>
+</body>
+</html>
+<script>
+  let query = window.location.search;
+  let param = new URLSearchParams(query);
+  let tag = param.get('tag');
+  fetch(`http://localhost:5000/api/tags/articles?tag=${tag}`)
+    .then((response) => response.json())
+    .then((data) => {
+      const tag = `${data.searchTag}`
+
+      const p = document.createElement("p");
+      p.innerHTML = tag;
+      document.getElementById("tagWrap").appendChild(p);
+
+      for (let i = 0; i < data.mappingArticle.length; i++) {
+        const row = `
+                    <td onclick="location.href='/articles/${data.mappingArticle[i].id}'">${data.mappingArticle[i].title}</td>
+                    <td onclick="location.href='/articles/${data.mappingArticle[i].id}'">${data.mappingArticle[i].contents}</td>
+                    <td onclick="location.href='/articles/${data.mappingArticle[i].id}'">${data.mappingArticle[i].author}</td>
+                    <td onclick="location.href='/articles/${data.mappingArticle[i].id}'">${data.mappingArticle[i].createdAt}</td>
+                    <td onclick="location.href='/articles/${data.mappingArticle[i].id}'">${data.mappingArticle[i].count}</td>
+                  `;
+        const tr = document.createElement("tr");
+        tr.innerHTML = row;
+        document.getElementById("article-table").appendChild(tr);
+      }
+    })
+</script>
