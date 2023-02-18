@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>기민한 게시판</title>
+        <title>게시물 상세</title>
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -68,50 +68,47 @@
     </body>
 </html>
 <script>
-    let query = window.location.search;
-    let param = new URLSearchParams(query);
-    let id = Number(param.get('id'));
+    const id = window.location.pathname.split('/')[2];
 
-    console.log(id);
+    fetch(`http://localhost:5000/api/articles/${id}`, { credentials: 'include' })
+        .then((response) => response.json())
+        .then((article) => {
+            const row = `
+                <th style="border: 1px solid black;">${article.title}</th>
+                <td style="border: 1px solid black;">${article.user_id}</td>
+                <td style="border: 1px solid black;">${article.count}</td>
+                <td style="border: 1px solid black;">${article.contents}</td>
+            `;
 
-    fetch(`http://localhost:5000/articles/${id}`, { credentials: 'include' }).then((response) => response.json());
-    //     .then((articles) => {
-    //         const row = `
-    //             <th style="border: 1px solid black;">${articles.title}</th>
-    //             <td style="border: 1px solid black;">${articles.user_id}</td>
-    //             <td style="border: 1px solid black;">${articles.count}</td>
-    //             <td style="border: 1px solid black;">${articles.contents}</td>
-    //         `;
+            const tr = document.createElement('tr');
+            tr.innerHTML = row;
+            document.getElementById('contents-table').appendChild(tr);
 
-    //         const tr = document.createElement('tr');
-    //         tr.innerHTML = row;
-    //         document.getElementById('contents-table').appendChild(tr);
+            const a = `
+                <button id="${article.id}" onclick="del(this)">삭제</button>
+                <a href="/modify/${article.id}">수정</a>
+            `;
 
-    //         const a = `
-    //             <button id="${articles.id}" onclick="del(this)">삭제</button>
-    //             <a href="/articles/${articles.id}">수정</a>
-    //         `;
+            const b = document.createElement('tr');
+            b.innerHTML = a;
+            document.getElementById('button').appendChild(b);
+        });
 
-    //         const b = document.createElement('tr');
-    //         b.innerHTML = a;
-    //         document.getElementById('button').appendChild(b);
-    //     });
+    function del(id) {
+        const del_id = document.getElementById(id.getAttribute('id')).getAttribute('id');
+        console.log(del_id);
 
-    // function del(id) {
-    //     const del_id = document.getElementById(id.getAttribute('id')).getAttribute('id');
-    //     console.log(del_id);
-
-    //     fetch(`http://localhost:5000/articles/${del_id}`, {
-    //         credentials: 'include',
-    //         method: 'DELETE',
-    //     })
-    //         .then((response) => response.json())
-    //         .then((response) => {
-    //             alert(response.message);
-    //             location.href = '/';
-    //         })
-    //         .catch((err) => {
-    //             alert(err.message);
-    //         });
-    // }
+        fetch(`http://localhost:5000/articles/${del_id}`, {
+            credentials: 'include',
+            method: 'DELETE',
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                alert(response.message);
+                location.href = '/';
+            })
+            .catch((err) => {
+                alert(err.message);
+            });
+    }
 </script>
