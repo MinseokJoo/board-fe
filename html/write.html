@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>글쓰기</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+            crossorigin="anonymous"
+        />
+    </head>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"
+    ></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Raleway, sans-serif;
+        }
+
+        body {
+            background: #c7c5f4;
+        }
+
+        input {
+            margin-bottom: 10px;
+        }
+
+        table {
+            margin-top: 50px;
+        }
+        .title {
+            width: 700px;
+            height: 30px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .email {
+            width: 140px;
+            height: 30px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .tag {
+            width: 850px;
+            height: 30px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .content {
+            width: 850px;
+            height: 300px;
+            border-radius: 5px;
+            border: none;
+        }
+    </style>
+
+    <body>
+        <div style="margin-top: 30px">
+            <a href="/home" style="text-decoration: none"><strong style="font-size: large">기민한 게시판</strong></a>
+        </div>
+        <!-- 홈으로 가기 -->
+
+        <table>
+            <tr>
+                <td>제목</td>
+                <td>
+                    <input type="text" class="title" name="title" id="title" placeholder="제목을 입력해주세요" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>태그</td>
+                <td><input type="text" class="tag" name="tag" id="tag" placeholder="제목을 입력해주세요" /></td>
+            </tr>
+            <tr>
+                <td>내용</td>
+                <td>
+                    <textarea class="content" name="content" id="content"></textarea>
+                </td>
+            </tr>
+        </table>
+
+            <div>
+                <div class="bt_wrap" style="margin-left: 400px">
+                    <button id="submit-button" type="submit">작성</button>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>
+<script>
+    document.getElementById('submit-button').addEventListener('click', (event) => {
+        event.preventDefault();
+
+        const data = {
+            title: document.getElementById('title').value,
+            tags: document.getElementById('tag').value.split(","),
+            contents: document.getElementById('content').value,
+        };
+
+
+        fetch(`http://localhost:5000/api/articles`, {
+            credentials: 'include',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => {
+                if (response.status === 400) {
+                    throw new Error('입력 제대로 안됨');
+                }
+                response.json();
+            })
+            .then((data) => {
+                location.replace('/home');
+            })
+            .catch((err) => {
+                alert(err.message);
+                location.replace('/home');
+            });
+    });
+</script>

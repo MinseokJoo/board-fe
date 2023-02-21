@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>댓글</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+            crossorigin="anonymous"
+        />
+    </head>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Raleway, sans-serif;
+        }
+
+        body {
+            background: #c7c5f4;
+        }
+
+        .comment {
+            height: 50px;
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .board_list_wrap {
+            padding: 50px;
+        }
+
+        .board_list {
+            width: 100%;
+            border-top: 2px solid #999;
+        }
+
+        .board_list tr {
+            border-bottom: 1px solid #999;
+        }
+
+        .board_list th,
+        .board_list td {
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .board_list td {
+            text-align: center;
+        }
+    </style>
+    <body>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossorigin="anonymous"
+        ></script>
+        <div style="margin-top: 30px">
+            <a href="/home" style="text-decoration: none"><strong style="font-size: large">기민한 게시판</strong></a>
+        </div>
+        <!-- 홈 -->
+        <div class="board_list_wrap">
+            <table class="board_list" id="comments_wrap">
+                <tr>
+                    <th>작성자</th>
+                    <th>내용</th>
+                    <th>작성일자</th>
+                </tr>
+            </table>
+            <div style="margin-top: 10px">
+                <textarea name="comment" class="comment" id="comment"></textarea>
+                <button id="comment_bt" class="comment_bt">댓글달기</button>
+            </div>
+        </div>
+    </body>
+</html>
+<script>
+    const id = window.location.pathname.split('/')[2];
+
+    fetch(`http://localhost:5000/api/comments/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+            for (let i = 0; i < data.articleComments.length; i++) {
+                const row = `
+                    <td>${data.articleComments[i].user_id}</td>
+                    <td>${data.articleComments[i].contents}</td>
+                    <td>${data.articleComments[i].createdAt}</td>
+                    <td>
+                        <button id="modify_btn" class="comment_bt" id="${data.articleComments[i].id}">수정</button>
+                        <button id="delete_btn" class="comment_bt" id="${data.articleComments[i].id}">삭제</button>
+                    </td>
+                  `;
+                const tr = document.createElement('tr');
+                tr.innerHTML = row;
+                document.getElementById('comments_wrap').appendChild(tr);
+            }
+            
+            const btn = ``
+        })
+
+        document.getElementById('comment_bt').addEventListener('click', (event) => {
+        event.preventDefault();
+
+        const data = {
+            contents: document.getElementById('comment').value,
+        };
+
+        fetch(`http://localhost:5000/api/comments/${id}`, {
+            credentials: 'include',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => {response.json();})
+            .then((data) => {
+                window.location.reload();
+            })
+            .catch((err) => {
+                alert(err.message);
+                window.location.reload();
+            });
+    });
+
+    document.getElementById('delete_btn').addEventListener('click', (event) => {
+        event.preventDefault();
+
+        fetch(`http://localhost:5000/api/comments/${id}`, {
+            credentials: 'include',
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => {response.json();})
+            .then((data) => {
+                window.location.reload();
+            })
+            .catch((err) => {
+                alert(err.message);
+                window.location.reload();
+            });
+    })
+</script>
