@@ -1,48 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <div>
-    <a href="/home">호므로</a>
-  </div><br>
-  <table id="info-table">
-    <tr>
-      <th>name</th>
-      <th>email</th>
-    </tr>
-  </table>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Raleway, sans-serif;
+        }
 
-  <table id="myposts-table">
-    <tr>
-      <th>title</th>
-      <th>contents</th>
-    </tr>
-  </table>
-</body>
+        body {
+            background: #c7c5f4;
+        }
+        .home {
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .info {
+            border-bottom: 1px solid #999;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+    <body>
+        <div class="home">
+            <a href="/" style="text-decoration: none"><strong style="font-size: large">기민한 게시판</strong></a>
+        </div>
+        <!-- 홈으로 가기 -->
+
+        <div class="info">내 정보</div>
+        <table id="info-table" style="border: 1px solid black">
+            <tr>
+                <th>name</th>
+                <th>email</th>
+            </tr>
+        </table>
+
+        <div>내가 쓴 글</div>
+        <table id="myposts-table" style="border: 1px solid black">
+            <tr>
+                <th>title</th>
+                <th>contents</th>
+            </tr>
+        </table>
+    </body>
 </html>
 <script>
-  fetch("http://localhost:5000/userInfos", {credentials: "include"}).then(response => response.json()).then(({userInfo}) => {
-    const row = `
+    fetch('http://localhost:5000/userInfos', { credentials: 'include' })
+        .then((response) => response.json())
+        .then(({ userInfo }) => {
+            const row = `
     <td>${userInfo.name}</td>
-    <td>${userInfo.email}</td>` 
+    <td>${userInfo.email}</td>`;
 
-    const tr = document.createElement("tr")
-    tr.innerHTML = row
-    document.getElementById("info-table").appendChild(tr)
+            const tr = document.createElement('tr');
+            tr.innerHTML = row;
+            document.getElementById('info-table').appendChild(tr);
 
-    for (let i = 0; i < userInfo.Articles.length; i++){
-      const a = `
+            for (let i = 0; i < userInfo.Articles.length; i++) {
+                const a = `
         <td>${userInfo.Articles[i].title}</td>
-        <td>${userInfo.Articles[i].contents}</td>` 
-  
-        const t = document.createElement("tr")
-        t.innerHTML = a
-        document.getElementById("myposts-table").appendChild(t)
-}
-  })
+        <td>${userInfo.Articles[i].contents}</td>`;
+
+                const t = document.createElement('tr');
+                t.innerHTML = a;
+                document.getElementById('myposts-table').appendChild(t);
+            }
+        });
 </script>
