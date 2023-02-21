@@ -19,8 +19,7 @@
             <span class="material-icons"> logout </span>
             <button type="button" id="logout" class="logout">로그아웃</button>
         </div>
-        <div id="todayTags">
-        </div>
+        <div id="todayTags"></div>
         <div class="board_list_wrap">
             <table class="board_list" style="border: 1px solid black" id="article-table">
                 <caption>
@@ -37,7 +36,7 @@
             </table>
         </div>
 
-        <div id="pagination" class="pagination-btn-wrap"></div>
+        <table id="pagination" class="pagination-btn-wrap"></table>
     </body>
 </html>
 <style>
@@ -93,6 +92,7 @@
     .board_list {
         width: 100%;
         border-top: 2px solid #999;
+        text-align: center;
     }
 
     .board_list tr {
@@ -117,20 +117,26 @@
         border: 0;
     }
     .logout:hover {
-        background-color: #bcbbde;
+        background-color: #d7bbde;
+
+        color: rgb(109, 55, 179);
+    }
+
+    #todayTags {
+        white-space: normal;
     }
 </style>
 <script>
-  fetch(`http://localhost:5000/api/tags/today`)
-    .then((response) => response.json())
-    .then((data) => {
-      for (let i = 0; i < data.length; i++) {
-        const row = `<a href='/search?tag=${data[i]}'>${data[i]}</a>`;
-        const span = document.createElement("span");
-        span.innerHTML = row;
-        document.getElementById("todayTags").appendChild(span);
-      }
-    })
+    fetch(`http://localhost:5000/api/tags/today`)
+        .then((response) => response.json())
+        .then((data) => {
+            for (let i = 0; i < data.length; i++) {
+                const row = `<a style="margin-right:5px; border:2px solid rgb(109, 55, 179); border-radius: 5px;"href='/search?tag=${data[i]}'>${data[i]}</a>`;
+                const span = document.createElement('span');
+                span.innerHTML = row;
+                document.getElementById('todayTags').appendChild(span);
+            }
+        });
 
     document.getElementById('logout').addEventListener('click', (event) => {
         event.preventDefault();
