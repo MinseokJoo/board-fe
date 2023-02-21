@@ -37,6 +37,7 @@
         .board_list {
             width: 100%;
             border-top: 2px solid #999;
+            text-align: center;
         }
 
         .board_list tr {
@@ -98,9 +99,9 @@
                 tr.innerHTML = row;
                 document.getElementById('comments_wrap').appendChild(tr);
             }
-        })
+        });
 
-        document.getElementById('comment_bt').addEventListener('click', (event) => {
+    document.getElementById('comment_bt').addEventListener('click', (event) => {
         event.preventDefault();
 
         const data = {
@@ -115,7 +116,9 @@
             },
             body: JSON.stringify(data),
         })
-            .then((response) => {response.json();})
+            .then((response) => {
+                response.json();
+            })
             .then((data) => {
                 window.location.reload();
             })
@@ -126,7 +129,7 @@
     });
 
     function del(id) {
-        const del_id = document.getElementById(id.getAttribute('id')).getAttribute('id').split(" ")[1]
+        const del_id = document.getElementById(id.getAttribute('id')).getAttribute('id').split(' ')[1];
         fetch(`http://localhost:5000/api/comments/${del_id}`, {
             credentials: 'include',
             method: 'DELETE',
@@ -134,7 +137,9 @@
                 'Content-Type': 'application/json',
             },
         })
-            .then((response) => {response.json();})
+            .then((response) => {
+                response.json();
+            })
             .then((data) => {
                 window.location.reload();
             })
@@ -145,7 +150,7 @@
     }
 
     function modify(id) {
-        const modify_id = document.getElementById(id.getAttribute('id')).getAttribute('id').split(" ")[1]
+        const modify_id = document.getElementById(id.getAttribute('id')).getAttribute('id').split(' ')[1];
         const data = {
             contents: document.getElementById('comment').value,
         };
@@ -157,7 +162,9 @@
             },
             body: JSON.stringify(data),
         })
-            .then((response) => {response.json();})
+            .then((response) => {
+                response.json();
+            })
             .then((data) => {
                 window.location.reload();
             })
@@ -166,5 +173,4 @@
                 window.location.reload();
             });
     }
-
 </script>
