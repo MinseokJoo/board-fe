@@ -20,6 +20,17 @@
     ></script>
 
     <style>
+        @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Raleway, sans-serif;
+        }
+
+        body {
+            background: #c7c5f4;
+        }
+
         input {
             margin-bottom: 10px;
         }
@@ -27,41 +38,61 @@
         table {
             margin-top: 50px;
         }
+        .title {
+            width: 700px;
+            height: 30px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .email {
+            width: 140px;
+            height: 30px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .tag {
+            width: 850px;
+            height: 30px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .content {
+            width: 850px;
+            height: 300px;
+            border-radius: 5px;
+            border: none;
+        }
     </style>
 
     <body>
         <div style="margin-top: 30px">
-            <a href="#" style="text-decoration: none"><strong style="font-size: large">기민한 게시판</strong></a>
+            <a href="/" style="text-decoration: none"><strong style="font-size: large">기민한 게시판</strong></a>
         </div>
-        <form action="" id="write-form">
-            <table>
-                <tr>
-                    <td>제목</td>
-                    <td>
-                        <input
-                            type="text"
-                            id="title"
-                            name="title"
-                            placeholder="제목을 입력해주세요"
-                            style="width: 700px"
-                        />
-                        <input type="text" id="email" name="email" placeholder="작성자" style="width: 140px" />
-                    </td>
-                </tr>
+        <!-- 홈으로 가기 -->
 
-                <tr>
-                    <td>태그</td>
-                    <td>
-                        <input type="text" id="tag" name="tag" placeholder="태그를 입력해주세요" style="width: 850px" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>내용</td>
-                    <td>
-                        <textarea id="content" name="content" style="width: 850px; height: 300px"></textarea>
-                    </td>
-                </tr>
-            </table>
+        <table>
+            <tr>
+                <td>제목</td>
+                <td>
+                    <input type="text" class="title" name="title" placeholder="제목을 입력해주세요" />
+                    <input type="text" class="email" name="email" placeholder="작성자" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>태그</td>
+                <td><input type="text" class="tag" name="tag" placeholder="제목을 입력해주세요" /></td>
+            </tr>
+            <tr>
+                <td>내용</td>
+                <td>
+                    <textarea class="content" name="content"></textarea>
+                </td>
+            </tr>
+        </table>
 
             <div>
                 <div class="bt_wrap" style="margin-left: 400px">
