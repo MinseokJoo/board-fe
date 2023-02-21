@@ -23,7 +23,7 @@
   <div class="container">
     <div class="screen">
         <div class="screen__content">
-            <form class="login" id="login-form">
+            <form class="login">
                 <h1 style="color:#fff;">로그인</h2>
                 <div class="login__field">
                     <span class="material-icons"> person </span>
@@ -33,11 +33,11 @@
                     <span class="material-icons"> lock </span>
                     <input type="password" class="login__input" placeholder="Password" id="password" />
                 </div>
-                <button class="button login__submit">
+                <button class="button login__submit" id="login">
                     <span class="button__text">Log In</span>
                     <span class="material-symbols-outlined"> chevron_right </span>
                 </button>
-                <button class="button login__submit">
+                <button class="button login__submit" type="button" onclick="location.href='/signup'">
                     <span class="button__text">Sign Up</span>
                     <span class="material-symbols-outlined"> chevron_right </span>
                 </button>
@@ -158,7 +158,7 @@
     }
 </style>
 <script>
-  document.getElementById("login-form").addEventListener("submit", (event) => {
+  document.getElementById("login").addEventListener("click", (event) => {
     event.preventDefault()
 
     const data = {

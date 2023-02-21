@@ -59,22 +59,22 @@
                       <h1 style="color:#fff;">회원가입</h2>
                       <div class="login__field">
                           <span class="material-icons"> person </span>
-                          <input type="text" class="login__input" placeholder="User name" />
+                          <input type="text" class="login__input" placeholder="User name" id="name" />
                       </div>
                       <div class="login__field">
                         <span class="material-icons"> person </span>
-                        <input type="text" class="login__input" placeholder="Email" />
+                        <input type="text" class="login__input" id="email" placeholder="Email" />
                     </div>
                       <div class="login__field">
                           <span class="material-icons"> lock </span>
-                          <input type="password" class="login__input" placeholder="Password" />
+                          <input type="password" class="login__input" id="password" placeholder="Password" />
                       </div>
                       <div class="login__field">
                         <span class="material-icons"> lock </span>
-                        <input type="password" class="login__input" placeholder="PasswordConfirm" />
+                        <input type="password" class="login__input" id="confirm" placeholder="PasswordConfirm" />
                       </div>
                       
-                      <button class="button login__submit">
+                      <button class="button login__submit" id="signup">
                           <span class="button__text">Sign Up</span>
                           <span class="material-symbols-outlined"> chevron_right </span>
                       </button>
@@ -220,17 +220,7 @@
     } */
 </style>
 <script>
-    window.addEventListener('keyup', () => {
-        if (document.getElementById('password').value === '') {
-            document.getElementById('confirmMsg').innerHTML = '';
-        } else if (document.getElementById('password').value !== document.getElementById('confirm').value) {
-            document.getElementById('confirmMsg').innerHTML = '비밀번호가 일치하지 않습니다.';
-        } else {
-            document.getElementById('confirmMsg').innerHTML = '비밀번호가 일치.';
-        }
-    });
-
-    document.getElementById('signup-form').addEventListener('submit', (event) => {
+    document.getElementById('signup').addEventListener('click', (event) => {
         event.preventDefault();
 
         const data = {
