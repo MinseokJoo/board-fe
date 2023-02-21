@@ -75,24 +75,21 @@
         <table>
             <tr>
                 <td>제목</td>
-                <td id="title_wrap">
-                </td>
+                <td id="title_wrap" style="background-color: #cfcef3; border-radius: 20px"></td>
             </tr>
 
             <tr>
                 <td>태그</td>
-                <td id="tag_wrap"></td>
+                <td id="tag_wrap" style="background-color: #cfcef3; border-radius: 20px"></td>
             </tr>
             <tr>
                 <td>내용</td>
-                <td id="contents_wrap" >
-                </td>
+                <td id="contents_wrap" style="background-color: #cfcef3; border-radius: 20px"></td>
             </tr>
         </table>
 
         <div>
-            <div class="bt_wrap" style="margin-left: 400px" id="button_wrap">
-            </div>
+            <div class="bt_wrap" style="margin-left: 400px" id="button_wrap"></div>
         </div>
 
         <!-- <table id="contents-table"></table>
@@ -106,28 +103,28 @@
 
     fetch(`http://localhost:5000/api/articles/${id}`, { credentials: 'include' })
         .then((response) => response.json())
-        .then(({data}) => {
+        .then(({ data }) => {
             const title = `
                 <div class="title">${data.title}</div>
-                <div class="email" >${data.email}</div>
+                <div class="email">${data.email}</div>
                 `;
-            
+
             document.getElementById('title_wrap').innerHTML = title;
 
             if (data.tags) {
                 for (let i = 0; i < data.tags.length; i++) {
-                    const tag = `<div class="tag">${data.tags[i]}</div>`
+                    const tag = `<div class="tag">${data.tags[i]}</div>`;
 
-                const div = document.createElement('div');
-                div.innerHTML = tag;
-                document.getElementById('tag_wrap').appendChild(div);
+                    const div = document.createElement('div');
+                    div.innerHTML = tag;
+                    document.getElementById('tag_wrap').appendChild(div);
                 }
             }
-            
-            const contents = `<div class="content">${data.contents}</div>`
+
+            const contents = `<div class="content">${data.contents}</div>`;
 
             document.getElementById('contents_wrap').innerHTML = contents;
-                
+
             const a = `
                 <button id="${id}" onclick="del()">삭제</button>
                 <button  onclick="location.href='/modify/${id}'">수정</button>
@@ -142,11 +139,11 @@
             method: 'DELETE',
         })
             .then((response) => {
-            if (response.status === 401) {
-                throw new Error("본인이 아니라잖아 ^^")
-            }
-            response.json()
-        })
+                if (response.status === 401) {
+                    throw new Error('본인이 아니라잖아 ^^');
+                }
+                response.json();
+            })
             .then((data) => {
                 location.href = '/home';
             })

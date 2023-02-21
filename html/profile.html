@@ -22,12 +22,35 @@
             margin-bottom: 50px;
         }
 
-        .info {
-            border-bottom: 1px solid #999;
-        }
-
         table {
             border-collapse: collapse;
+        }
+        #info-table {
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        #info-table tr {
+            border-bottom: 2px solid #999;
+        }
+
+        #info-table th {
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        #myposts-table {
+            width: 100%;
+            border-top: 2px solid #999;
+        }
+
+        #myposts-table th {
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        #myposts-table tr {
+            border-bottom: 2px solid #999;
         }
     </style>
     <body>
@@ -54,8 +77,10 @@
     </body>
 </html>
 <script>
-  fetch("http://localhost:5000/api/users/mypage", {credentials: "include"}).then(response => response.json()).then((userInfo) => {
-    const row = `
+    fetch('http://localhost:5000/api/users/mypage', { credentials: 'include' })
+        .then((response) => response.json())
+        .then((userInfo) => {
+            const row = `
     <td>${userInfo.name}</td>
     <td>${userInfo.email}</td>`;
 
