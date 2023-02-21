@@ -26,15 +26,23 @@ app.get("/profile", (req, res) => {
   res.sendFile(__dirname + "/html/profile.html")
 })
 
-app.get("/detail/:id", (req, res) => {
+app.get("/search", (req,res) => {
+  res.sendFile(__dirname + "/html/search.html")
+})
+
+app.get("/articles/:id", (req, res) => {
   res.sendFile(__dirname + "/html/detail.html")
 })
 
-app.post("/write", (req, res) => {
+app.get("/write", (req, res) => {
   res.sendFile(__dirname + "/html/write.html")
 })
 
-app.patch("/modify/:id", (req, res) => {
+app.get("/modify/:id", (req, res) => {
   res.sendFile(__dirname + "/html/modify.html")
+})
+
+app.get("/comments/:id", (req, res) => {
+  res.sendFile(__dirname + "/html/comments.html")
 })
 app.listen(5100, console.log("프론트 서버 온!"))

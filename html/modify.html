@@ -69,7 +69,7 @@
 
     <body>
         <div style="margin-top: 30px">
-            <a href="/" style="text-decoration: none"><strong style="font-size: large">기민한 게시판</strong></a>
+            <a href="/home" style="text-decoration: none"><strong style="font-size: large">기민한 게시판</strong></a>
         </div>
         <!-- 홈으로 가기 -->
 
@@ -77,19 +77,19 @@
             <tr>
                 <td>제목</td>
                 <td>
-                    <input type="text" class="title" name="title" placeholder="제목을 입력해주세요" />
-                    <input type="text" class="email" name="email" placeholder="작성자" />
+                    <input type="text" class="title" name="title" id="title" placeholder="제목을 입력해주세요" />
+                    <div type="text" class="email" name="email" id="email" placeholder="작성자"></div>
                 </td>
             </tr>
 
             <tr>
                 <td>태그</td>
-                <td><input type="text" class="tag" name="tag" placeholder="제목을 입력해주세요" /></td>
+                <td><input type="text" class="tag" name="tag" id="tag" placeholder="태그를 입력해주세요" /></td>
             </tr>
             <tr>
                 <td>내용</td>
                 <td>
-                    <textarea class="content" name="content"></textarea>
+                    <textarea class="content" name="content" id="contents"></textarea>
                 </td>
             </tr>
         </table>
@@ -102,3 +102,54 @@
         </form>
     </body>
 </html>
+<script>
+    const id = window.location.pathname.split('/')[2];
+
+    fetch(`http://localhost:5000/api/articles/${id}`)
+        .then((response) => response.json())
+        .then(({data}) => {
+            document.getElementById('title').value = data.title
+            document.getElementById('contents').value = data.contents
+            if (data.tags) {
+                document.getElementById('tag').value = data.tags
+            }
+            document.getElementById('email').innerHTML = data.email
+        })
+
+    document.getElementById('submit-button').addEventListener('click', (event) => {
+        event.preventDefault();
+        const tags = document.getElementById('tag').value.split(",")
+        const data = {
+            title: document.getElementById('title').value,
+            tags: tags,
+            contents: document.getElementById('contents').value,
+        };
+
+
+
+        fetch(`http://localhost:5000/api/articles/${id}`, {
+            credentials: 'include',
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => {
+                if (response.status === 401) {
+                    alert("본인 아님")
+                }
+                if (response.status === 200) {
+                    alert("수정완료")
+                }
+                response.json();
+            })
+            .then((data) => {
+                location.replace('/home');
+            })
+            .catch((err) => {
+                alert(err.message);
+                location.replace('/home');
+            });
+    });
+</script>

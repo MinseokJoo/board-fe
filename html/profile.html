@@ -32,7 +32,7 @@
     </style>
     <body>
         <div class="home">
-            <a href="/" style="text-decoration: none"><strong style="font-size: large">기민한 게시판</strong></a>
+            <a href="/home" style="text-decoration: none"><strong style="font-size: large">기민한 게시판</strong></a>
         </div>
         <!-- 홈으로 가기 -->
 
@@ -54,10 +54,8 @@
     </body>
 </html>
 <script>
-    fetch('http://localhost:5000/userInfos', { credentials: 'include' })
-        .then((response) => response.json())
-        .then(({ userInfo }) => {
-            const row = `
+  fetch("http://localhost:5000/api/users/mypage", {credentials: "include"}).then(response => response.json()).then((userInfo) => {
+    const row = `
     <td>${userInfo.name}</td>
     <td>${userInfo.email}</td>`;
 

@@ -69,7 +69,7 @@
 
     <body>
         <div style="margin-top: 30px">
-            <a href="/" style="text-decoration: none"><strong style="font-size: large">기민한 게시판</strong></a>
+            <a href="/home" style="text-decoration: none"><strong style="font-size: large">기민한 게시판</strong></a>
         </div>
         <!-- 홈으로 가기 -->
 
@@ -77,19 +77,18 @@
             <tr>
                 <td>제목</td>
                 <td>
-                    <input type="text" class="title" name="title" placeholder="제목을 입력해주세요" />
-                    <input type="text" class="email" name="email" placeholder="작성자" />
+                    <input type="text" class="title" name="title" id="title" placeholder="제목을 입력해주세요" />
                 </td>
             </tr>
 
             <tr>
                 <td>태그</td>
-                <td><input type="text" class="tag" name="tag" placeholder="제목을 입력해주세요" /></td>
+                <td><input type="text" class="tag" name="tag" id="tag" placeholder="제목을 입력해주세요" /></td>
             </tr>
             <tr>
                 <td>내용</td>
                 <td>
-                    <textarea class="content" name="content"></textarea>
+                    <textarea class="content" name="content" id="content"></textarea>
                 </td>
             </tr>
         </table>
@@ -103,21 +102,17 @@
     </body>
 </html>
 <script>
-    document.getElementById('write-form').addEventListener('submit', (event) => {
+    document.getElementById('submit-button').addEventListener('click', (event) => {
         event.preventDefault();
 
         const data = {
             title: document.getElementById('title').value,
-            email: document.getElementById('email').value,
-            tag: document.getElementById('tag').value,
-            content: document.getElementById('content').value,
+            tags: document.getElementById('tag').value.split(","),
+            contents: document.getElementById('content').value,
         };
 
-        const id = window.location.pathname;
 
-        console.log(id);
-
-        fetch('http://localhost:5000/api/article', {
+        fetch(`http://localhost:5000/api/articles`, {
             credentials: 'include',
             method: 'POST',
             headers: {

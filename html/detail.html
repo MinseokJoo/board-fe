@@ -68,36 +68,30 @@
 
     <body>
         <div style="margin-top: 30px">
-            <a href="/" style="text-decoration: none"><strong style="font-size: large">기민한 게시판</strong></a>
+            <a href="/home" style="text-decoration: none"><strong style="font-size: large">기민한 게시판</strong></a>
         </div>
         <!-- 홈으로 가기 -->
 
         <table>
             <tr>
                 <td>제목</td>
-                <td>
-                    <input type="text" class="title" name="title" placeholder="제목을 입력해주세요" />
-                    <input type="text" class="email" name="email" placeholder="작성자" />
+                <td id="title_wrap">
                 </td>
             </tr>
 
             <tr>
                 <td>태그</td>
-                <td><input type="text" class="tag" name="tag" placeholder="제목을 입력해주세요" /></td>
+                <td id="tag_wrap"></td>
             </tr>
             <tr>
                 <td>내용</td>
-                <td>
-                    <textarea class="content" name="content"></textarea>
+                <td id="contents_wrap" >
                 </td>
             </tr>
         </table>
 
         <div>
-            <div class="bt_wrap" style="margin-left: 400px">
-                <button id="submit-button" type="submit">수정</button>
-                <button>삭제</button>
-                <button>댓글</button>
+            <div class="bt_wrap" style="margin-left: 400px" id="button_wrap">
             </div>
         </div>
 
@@ -112,40 +106,45 @@
 
     fetch(`http://localhost:5000/api/articles/${id}`, { credentials: 'include' })
         .then((response) => response.json())
-        .then((article) => {
-            const row = `
-                <th style="border: 1px solid black;">${article.title}</th>
-                <td style="border: 1px solid black;">${article.user_id}</td>
-                <td style="border: 1px solid black;">${article.count}</td>
-                <td style="border: 1px solid black;">${article.contents}</td>
-            `;
+        .then(({data}) => {
+            const title = `
+                <div class="title">${data.title}</div>
+                <div class="email" >${data.email}</div>
+                `;
+            
+            document.getElementById('title_wrap').innerHTML = title;
 
-            const tr = document.createElement('tr');
-            tr.innerHTML = row;
-            document.getElementById('contents-table').appendChild(tr);
+            if (data.tags) {
+                for (let i = 0; i < data.tags.length; i++) {
+                    const tag = `<div class="tag">${data.tags[i]}</div>`
 
+                const div = document.createElement('div');
+                div.innerHTML = tag;
+                document.getElementById('tag_wrap').appendChild(div);
+                }
+            }
+            
+            const contents = `<div class="content">${data.contents}</div>`
+
+            document.getElementById('contents_wrap').innerHTML = contents;
+                
             const a = `
-                <button id="${article.id}" onclick="del(this)">삭제</button>
-                <a href="/modify/${article.id}">수정</a>
+                <button id="${id}" onclick="del()">삭제</button>
+                <button  onclick="location.href='/modify/${id}'">수정</button>
+                <button onclick="location.href='/comments/${id}'">댓글</button>
             `;
-
-            const b = document.createElement('tr');
-            b.innerHTML = a;
-            document.getElementById('button').appendChild(b);
+            document.getElementById('button_wrap').innerHTML = a;
         });
 
-    function del(id) {
-        const del_id = document.getElementById(id.getAttribute('id')).getAttribute('id');
-        console.log(del_id);
-
-        fetch(`http://localhost:5000/articles/${del_id}`, {
+    function del() {
+        fetch(`http://localhost:5000/api/articles/${id}`, {
             credentials: 'include',
             method: 'DELETE',
         })
             .then((response) => response.json())
-            .then((response) => {
-                alert(response.message);
-                location.href = '/';
+            .then((data) => {
+                alert(data);
+                location.href = '/home';
             })
             .catch((err) => {
                 alert(err.message);
