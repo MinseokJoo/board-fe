@@ -90,16 +90,14 @@
                     <td>${data.articleComments[i].contents}</td>
                     <td>${data.articleComments[i].createdAt}</td>
                     <td>
-                        <button id="modify_btn" class="comment_bt" id="${data.articleComments[i].id}">수정</button>
-                        <button id="delete_btn" class="comment_bt" id="${data.articleComments[i].id}">삭제</button>
+                        <button id="modify_btn ${data.articleComments[i].id}" class="comment_bt" onclick="modify(this)">수정</button>
+                        <button id="delete_btn ${data.articleComments[i].id}" class="comment_bt" onclick="del(this)">삭제</button>
                     </td>
                   `;
                 const tr = document.createElement('tr');
                 tr.innerHTML = row;
                 document.getElementById('comments_wrap').appendChild(tr);
             }
-            
-            const btn = ``
         })
 
         document.getElementById('comment_bt').addEventListener('click', (event) => {
@@ -127,10 +125,9 @@
             });
     });
 
-    document.getElementById('delete_btn').addEventListener('click', (event) => {
-        event.preventDefault();
-
-        fetch(`http://localhost:5000/api/comments/${id}`, {
+    function del(id) {
+        const del_id = document.getElementById(id.getAttribute('id')).getAttribute('id').split(" ")[1]
+        fetch(`http://localhost:5000/api/comments/${del_id}`, {
             credentials: 'include',
             method: 'DELETE',
             headers: {
@@ -145,5 +142,29 @@
                 alert(err.message);
                 window.location.reload();
             });
-    })
+    }
+
+    function modify(id) {
+        const modify_id = document.getElementById(id.getAttribute('id')).getAttribute('id').split(" ")[1]
+        const data = {
+            contents: document.getElementById('comment').value,
+        };
+        fetch(`http://localhost:5000/api/comments/${modify_id}`, {
+            credentials: 'include',
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => {response.json();})
+            .then((data) => {
+                window.location.reload();
+            })
+            .catch((err) => {
+                alert(err.message);
+                window.location.reload();
+            });
+    }
+
 </script>

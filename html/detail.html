@@ -141,13 +141,18 @@
             credentials: 'include',
             method: 'DELETE',
         })
-            .then((response) => response.json())
+            .then((response) => {
+            if (response.status === 401) {
+                throw new Error("본인이 아니라잖아 ^^")
+            }
+            response.json()
+        })
             .then((data) => {
-                alert(data);
                 location.href = '/home';
             })
             .catch((err) => {
                 alert(err.message);
+                location.href = '/home';
             });
     }
 </script>
