@@ -22,12 +22,29 @@
             margin-bottom: 50px;
         }
 
-        .info {
-            border-bottom: 1px solid #999;
-        }
-
         table {
             border-collapse: collapse;
+        }
+
+        .info-table {
+            width: 100%;
+            border-top: 2px solid #999;
+            margin-bottom: 50px;
+        }
+
+        .info-table th {
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .myposts-table {
+            width: 100%;
+            border-top: 2px solid #999;
+        }
+
+        .myposts-table th {
+            padding: 10px;
+            font-size: 14px;
         }
     </style>
     <body>
@@ -37,15 +54,15 @@
         <!-- 홈으로 가기 -->
 
         <div class="info">내 정보</div>
-        <table id="info-table" style="border: 1px solid black">
+        <table class="info-table" style="border: 1px solid black">
             <tr>
                 <th>name</th>
                 <th>email</th>
             </tr>
         </table>
 
-        <div>내가 쓴 글</div>
-        <table id="myposts-table" style="border: 1px solid black">
+        <div>내 게시물</div>
+        <table class="myposts-table" style="border: 1px solid black">
             <tr>
                 <th>title</th>
                 <th>contents</th>

@@ -30,11 +30,11 @@ app.get("/detail/:id", (req, res) => {
   res.sendFile(__dirname + "/html/detail.html")
 })
 
-app.post("/write", (req, res) => {
+app.get("/write", (req, res) => {
   res.sendFile(__dirname + "/html/write.html")
 })
 
-app.patch("/modify/:id", (req, res) => {
+app.get("/modify/:id", (req, res) => {
   res.sendFile(__dirname + "/html/modify.html")
 })
 app.listen(5100, console.log("프론트 서버 온!"))
