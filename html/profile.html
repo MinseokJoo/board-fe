@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Raleway, sans-serif;
+        }
+
+        body {
+            background: #c7c5f4;
+        }
+        .home {
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+        #info-table {
+            width: 100%;
+            margin-bottom: 50px;
+            text-align: center;
+            border: 1px solid black;
+        }
+
+        #info-table tr {
+            border-bottom: 2px solid #999;
+        }
+
+        #info-table td {
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        #myposts-table {
+            border-top: 2px solid #999;
+            /* text-align: center; */
+            width: 100%;
+        }
+
+        #myposts-table td {
+            display: inline-block;
+            width: 600px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 150px;
+        }
+
+        #myposts-table tr {
+            border-bottom: 2px solid #999;
+        }
+    </style>
+    <body>
+        <div class="home">
+            <a href="/home" style="text-decoration: none"><strong style="font-size: large">기민한 게시판</strong></a>
+        </div>
+        <!-- 홈으로 가기 -->
+
+        <div class="info">내 정보</div>
+        <table id="info-table">
+            <tr>
+                <td>name</td>
+                <td>email</td>
+            </tr>
+        </table>
+
+        <div>내가 쓴 글</div>
+        <table id="myposts-table" style="border: 1px solid black">
+            <tr>
+                <td>title</td>
+                <td>contents</td>
+            </tr>
+        </table>
+    </body>
+</html>
+<script>
+    fetch('http://localhost:5000/api/users/mypage', { credentials: 'include' })
+        .then((response) => response.json())
+        .then((userInfo) => {
+            const row = `
+    <td>${userInfo.name}</td>
+    <td>${userInfo.email}</td>`;
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = row;
+            document.getElementById('info-table').appendChild(tr);
+
+            for (let i = 0; i < userInfo.Articles.length; i++) {
+                const a = `
+        <td>${userInfo.Articles[i].title}</td>
+        <td>${userInfo.Articles[i].contents}</td>`;
+
+                const t = document.createElement('tr');
+                t.innerHTML = a;
+                document.getElementById('myposts-table').appendChild(t);
+            }
+        });
+</script>

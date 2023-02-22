@@ -1,23 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>기민한 게시판</title>
+  <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+        />
+  <title>로그인</title>
 </head>
 <body>
-  <form action="" id="login-form">
+  <!-- <form action="" id="login-form">
     <label for="email">이메일</label>
     <input type="email" id="email" name="email" required placeholder="이메일을 입력해주세용">
     <label for="password">비밀번호</label>
     <input type="password" id="password" name="password" required placeholder="비밀번호를 입력해주세용">
     <button type="submit">로그인</button>
-  </form>
+    <button type="button" onclick="location.href='/signup'">회원가입</button>
+  </form> -->
+  <div class="container">
+    <div class="screen">
+        <div class="screen__content">
+            <form class="login">
+                <h1 style="color:#fff;">로그인</h2>
+                <div class="login__field">
+                    <span class="material-icons"> person </span>
+                    <input type="text" class="login__input" placeholder="User name / Email" id="email" />
+                </div>
+                <div class="login__field">
+                    <span class="material-icons"> lock </span>
+                    <input type="password" class="login__input" placeholder="Password" id="password" />
+                </div>
+                <button class="button login__submit" id="login">
+                    <span class="button__text">Log In</span>
+                    <span class="material-symbols-outlined"> chevron_right </span>
+                </button>
+                <button class="button login__submit" type="button" onclick="location.href='/signup'">
+                    <span class="button__text">Sign Up</span>
+                    <span class="material-symbols-outlined"> chevron_right </span>
+                </button>
+            </form>
+            <!-- <div class="social">
+                <div class="social-icons">
+                    <a href="#" class="social-login__icon fab fa-instagram"
+                        ><span class="material-icons"> light </span></a
+                    >
+                    <a href="#" class="social-login__icon fab fa-facebook"></a>
+                    <a href="#" class="social-login__icon fab fa-twitter"></a>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
 </body>
 </html>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Raleway, sans-serif;
+    }
+
+    body {
+        background: #c7c5f4;
+    }
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    .screen {
+        background: #9c9ddc;
+        position: relative;
+        height: 600px;
+        width: 360px;
+    }
+
+    .screen__content {
+        z-index: 1;
+        position: relative;
+        height: 100%;
+    }
+
+    .login {
+        width: 320px;
+        padding: 30px;
+        padding-top: 120px;
+    }
+
+    .login__field {
+        padding: 20px 0px;
+        position: relative;
+    }
+
+    .login__icon {
+        position: absolute;
+        top: 30px;
+        color: #7875b5;
+    }
+
+    .login__input {
+        border: none;
+        border-bottom: 2px solid #d1d1d4;
+        background: none;
+        padding: 10px;
+        padding-left: 24px;
+        font-weight: 700;
+        width: 75%;
+        transition: 0.2s;
+    }
+
+    .login__input:active,
+    .login__input:focus,
+    .login__input:hover {
+        outline: none;
+        border-bottom-color: #6a679e;
+    }
+
+    .login__submit {
+        background: #fff;
+        font-size: 14px;
+        margin-top: 30px;
+        padding: 16px 20px;
+        border-radius: 26px;
+        border: 1px solid #d4d3e8;
+        text-transform: uppercase;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        color: #4c489d;
+        box-shadow: 0px 2px 2px #5c5696;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .login__submit:active,
+    .login__submit:focus,
+    .login__submit:hover {
+        border-color: #6a679e;
+        outline: none;
+    }
+
+    .button__icon {
+        font-size: 24px;
+        margin-left: auto;
+        color: #7875b5;
+    }
+</style>
 <script>
-  document.getElementById("login-form").addEventListener("submit", (event) => {
+  document.getElementById("login").addEventListener("click", (event) => {
     event.preventDefault()
 
     const data = {
@@ -35,6 +176,9 @@
     }).then(response => {
       if (response.status === 400) {
         throw new Error("이메일 또는 비밀번호가 틀렸습니다.")
+      }
+      if (response.status === 401) {
+        throw new Error("전체 입력 바랍니다.")
       }
       response.json()
     })
