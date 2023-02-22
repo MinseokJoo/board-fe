@@ -1,11 +1,11 @@
-# ![header](https://capsule-render.vercel.app/api?type=wave&color=#EADFF2&height=300&section=header&text=태그형%20게시판&fontSize=50)
+# 🫐기민한 게시판🫐
 tag를 추가 하여 게시물을 올릴 수 있는 게시판입니다
 ---
 
 ## 💻SERVICE
 
-
 기본 게시판 형태에 태그를 넣을 수 있게 만들었습니다
+
 ![image](https://user-images.githubusercontent.com/111362623/220508372-4e4f1222-0835-4071-9006-e0ed374256a7.png)
 ![image](https://user-images.githubusercontent.com/111362623/220508417-758dc7f4-de95-4628-b766-6c070396dc3f.png)
 ---
@@ -60,5 +60,10 @@ ___
 
 ## 📜API 명세서
 [API](https://www.notion.so/API-81407027de3049de951c36b8036a6668)
+
+## ERD
+[ERD](https://www.notion.so/ERD-91bcdb024414472d9c9c76b4d14372d1)
+
+
 
 backend기능 깃허브 주소: https://github.com/jennaaaaaaaaa/board-be
