@@ -38,10 +38,13 @@
             margin-top: 50px;
         }
         .title {
-            width: 700px;
+            width: 100%;
             height: 30px;
             border-radius: 5px;
             border: none;
+            background-color: #cfcef3;
+            border-radius: 20px;
+            word-wrap: break-word;
         }
 
         .email {
@@ -49,20 +52,26 @@
             height: 30px;
             border-radius: 5px;
             border: none;
+            background-color: #cfcef3;
+            margin-top: 5px;
         }
 
         .tag {
             width: 850px;
             height: 30px;
-            border-radius: 5px;
+            border-radius: 20px;
             border: none;
+            background-color: #cfcef3;
         }
 
         .content {
             width: 850px;
             height: 300px;
-            border-radius: 5px;
             border: none;
+            background-color: #cfcef3;
+            border-radius: 20px;
+            word-wrap: break-word;
+            overflow: auto;
         }
     </style>
 
@@ -75,16 +84,16 @@
         <table>
             <tr>
                 <td>제목</td>
-                <td id="title_wrap" style="background-color: #cfcef3; border-radius: 20px; width: 700px"></td>
+                <td id="title_wrap"></td>
             </tr>
 
             <tr>
                 <td>태그</td>
-                <td id="tag_wrap" style="background-color: #cfcef3; border-radius: 20px"></td>
+                <td id="tag_wrap"></td>
             </tr>
             <tr>
                 <td>내용</td>
-                <td id="contents_wrap" style="background-color: #cfcef3; border-radius: 20px; width: 850px"></td>
+                <td id="contents_wrap"></td>
             </tr>
         </table>
 
