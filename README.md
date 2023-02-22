@@ -40,8 +40,8 @@ ___
 ---
 BACKEND
 ```
-- Node.js
-- Mysql
+- Node.js (express)
+- Mysql (Sequelize)
 ```
 FRONTEND
 ```
@@ -53,9 +53,81 @@ FRONTEND
 TOOL
 ```
 - GitHub
-- Vscode
+- VSCode
+- AWS RDS
 ```
+Dependencies
+```
+"dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "joi": "^17.7.1",
+    "jsonwebtoken": "^9.0.0",
+    "mysql2": "^3.1.2",
+    "redis": "^4.6.4",
+    "sequelize": "^6.28.0"
+  },
+  ```
 
+폴더구조
+  ```
+├─config
+│ └─config.json
+│
+├─controllers
+│ ├─article.controller.js
+│ ├─comments.controller.js
+│ ├─tag.controller.js
+│ └─user.controller.js
+│
+├─middleware
+│ ├─auth.js
+│ └─valudation.js
+│
+├─migrations
+│ ├─20230209065545-create-user.js
+│ ├─20230209065704-create-article.js
+│ ├─20230209065745-create-tag.js
+│ ├─20230209065840-create-article-tag-mapping.js
+│ └─20230214073113-create-comments.js
+│
+├─models
+│ ├─article_tag_mapping.js
+│ ├─article.js
+│ ├─comments.js
+│ ├─index.js
+│ ├─tag.js
+│ └─user.js
+│
+├─repositorys
+│ ├─article.repository.js
+│ ├─comments.repository.js
+│ ├─tag.repository.js
+│ └─user.repository.js
+│
+├─routes
+│ ├─article.route.js
+│ ├─comments.routes.js
+│ ├─routes.js
+│ ├─tag.route.js
+│ └─user.route.js
+│
+├─seeders
+├─services
+│ ├─article.service.js
+│ ├─comments.service.js
+│ ├─tag.service.js
+│ └─user.service.js
+│
+├─util
+│ ├─config.js
+│ ├─redis.js
+│
+└─app.js
+
+  ```
 ___
 
 ## 📜API 명세서
