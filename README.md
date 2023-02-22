@@ -8,7 +8,7 @@ tag를 추가 하여 게시물을 올릴 수 있는 게시판입니다
 
 ![image](https://user-images.githubusercontent.com/111362623/220508372-4e4f1222-0835-4071-9006-e0ed374256a7.png)
 ![image](https://user-images.githubusercontent.com/111362623/220508417-758dc7f4-de95-4628-b766-6c070396dc3f.png)
----
+
 ```
   1. 게시물 작성 수정 삭제 기능
   2. 해당 게시물의 댓글 작성 수정 삭제 기능
@@ -16,7 +16,6 @@ tag를 추가 하여 게시물을 올릴 수 있는 게시판입니다
   4. 로그인 로그아웃
   5. 페이지네이션기능
 ```
-___
 
 ## 👤역할 분담
 
@@ -37,7 +36,7 @@ ___
 ```
 
 ## 🔧사용 기술
----
+
 BACKEND
 ```
 - Node.js (express)
@@ -56,7 +55,9 @@ TOOL
 - VSCode
 - AWS RDS
 ```
-Dependencies
+
+## 🎨Dependencies
+
 ```
 "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -68,21 +69,16 @@ Dependencies
     "mysql2": "^3.1.2",
     "redis": "^4.6.4",
     "sequelize": "^6.28.0"
-  },
-  ```
-___
+  }
+```
 
 ## 📜API 명세서
 [API](https://www.notion.so/API-81407027de3049de951c36b8036a6668)
 
-## ERD
+## 🖼️ERD
 [ERD](https://www.notion.so/ERD-91bcdb024414472d9c9c76b4d14372d1)
 
-
-
-backend기능 깃허브 주소: https://github.com/jennaaaaaaaaa/board-be
-
-폴더구조
+## 🗂️폴더구조
   ```
 ├─config
 │ └─config.json
@@ -138,4 +134,23 @@ backend기능 깃허브 주소: https://github.com/jennaaaaaaaaa/board-be
 │
 └─app.js
 
-  ```
+```
+
+## 🔎jmeter
+
+**캐시사용x**
+
+![image](https://user-images.githubusercontent.com/111362623/220600658-9d645811-b7ec-40fd-a3df-9dd1edb75b47.png)
+
+**캐시사용o**
+
+![image](https://user-images.githubusercontent.com/111362623/220600496-0ba81ea9-171f-4714-8bcb-203a8d7711f0.png)
+
+**테스트 조건**
+
+![image](https://user-images.githubusercontent.com/111362623/220600285-1d1e36fe-18cf-4eb2-a145-039e3292117a.png)
+
+
+
+  
+[backend기능](https://github.com/jennaaaaaaaaa/board-be)
