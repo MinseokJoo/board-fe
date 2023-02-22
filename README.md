@@ -70,6 +70,17 @@ Dependencies
     "sequelize": "^6.28.0"
   },
   ```
+___
+
+## 📜API 명세서
+[API](https://www.notion.so/API-81407027de3049de951c36b8036a6668)
+
+## ERD
+[ERD](https://www.notion.so/ERD-91bcdb024414472d9c9c76b4d14372d1)
+
+
+
+backend기능 깃허브 주소: https://github.com/jennaaaaaaaaa/board-be
 
 폴더구조
   ```
@@ -128,14 +139,3 @@ Dependencies
 └─app.js
 
   ```
-___
-
-## 📜API 명세서
-[API](https://www.notion.so/API-81407027de3049de951c36b8036a6668)
-
-## ERD
-[ERD](https://www.notion.so/ERD-91bcdb024414472d9c9c76b4d14372d1)
-
-
-
-backend기능 깃허브 주소: https://github.com/jennaaaaaaaaa/board-be
