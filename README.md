@@ -22,38 +22,38 @@ ___
 
 김기민
 ```
--게시글 상세조회
--댓글 조회, 작성, 수정
--게시글 수정, 삭제, 작성
+- 게시글 상세조회
+- 댓글 조회, 작성, 수정
+- 게시글 수정, 삭제, 작성
 ```
 
 주민석
 ```
--회원가입, 로그인, 로그아웃
--내 정보 조회 및 최신 게시글 10개 조회
--게시물목록 조회
--top10 tag조회
--태그별 게시글 조회
+- 회원가입, 로그인, 로그아웃
+- 내 정보 조회 및 최신 게시글 10개 조회
+- 게시물목록 조회
+- top10 tag조회
+- 태그별 게시글 조회
 ```
 
 ## 🔧사용 기술
 ---
 BACKEND
 ```
--Node.js
--Mysql
+- Node.js
+- Mysql
 ```
 FRONTEND
 ```
--HTML
--CSS
--Javascript
--Googleicon, font
+- HTML
+- CSS
+- Javascript
+- Googleicon, font
 ```
 TOOL
 ```
--GitHub
--Vscode
+- GitHub
+- Vscode
 ```
 
 ___
